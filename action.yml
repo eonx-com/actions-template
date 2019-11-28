@@ -7,14 +7,15 @@ branding:
   color: 'red'
 
 inputs:
+  ENVIRONMENT:
+    description: 'Environment to build (if asterisk, all environment in the config root will be built)'
+    default: '*'
+    required: false
   TEMPLATE_ROOT:
     description: 'Root path to templates'
     required: true
   CONFIG_ROOT:
     description: 'Root path to the configuration files'
-    required: true
-  ENVIRONMENT:
-    description: 'Environment to build (if asterisk, all environment in the config root will be built)'
     required: true
   OUTPUT_PATH:
     description: 'Path where generated templates will be output'

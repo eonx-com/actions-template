@@ -13,6 +13,9 @@ inputs:
   CONFIG_ROOT:
     description: 'Root path to the configuration files'
     required: true
+  ENVIRONMENT:
+    description: 'Environment to build (if asterisk, all environment in the config root will be built)'
+    required: true
   OUTPUT_PATH:
     description: 'Path where generated templates will be output'
     required: true
@@ -29,6 +32,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ inputs.ENVIRONMENT }}
     - ${{ inputs.TEMPLATE_ROOT }}
     - ${{ inputs.CONFIG_ROOT }}
     - ${{ inputs.OUTPUT_PATH }}

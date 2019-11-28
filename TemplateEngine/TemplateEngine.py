@@ -10,23 +10,23 @@ class TemplateEngine:
     config_path = None
 
     @staticmethod
-    def generate(environment, template_path='template', config_path='config'):
+    def generate(environment, template_root='template', config_root='config'):
         """
         Generate CloudFormation Template
 
-        :type config_path: str
-        :param config_path: The base path under which the configuration files are located
+        :type config_root: str
+        :param config_root: The base path under which the configuration files are located
 
-        :type template_path: str
-        :param template_path: The base path under which templates are located
+        :type template_root: str
+        :param template_root: The base path under which templates are located
 
         :type environment: str
         :param environment: The name of the environment to build
 
         :return:
         """
-        TemplateEngine.config_path = config_path
-        TemplateEngine.template_path = template_path
+        TemplateEngine.config_path = config_root
+        TemplateEngine.template_path = template_root
 
         yaml_stack_config = {'environment': environment}
         yaml_resource_configs = {}
@@ -34,7 +34,7 @@ class TemplateEngine:
 
         # Load configuration files
         path = '{config_path}/{environment_name}'.format(
-            config_path=config_path,
+            config_path=config_root,
             environment_name=environment
         )
 

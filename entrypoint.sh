@@ -21,6 +21,7 @@ if [[ ! -d "${OUTPUT_PATH}" ]]; then
     exit 3;
 fi
 
+# Install Python requirements
 pip install -r ./requirements.txt
 
 # Iterate over each environment folder

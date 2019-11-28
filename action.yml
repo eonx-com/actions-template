@@ -1,5 +1,5 @@
 name: 'eonx-com/actions-template'
-description: 'Build CloudFormation templates from YML configuration files'
+description: 'Build templates from YML configuration files'
 author: 'Damian Sloane <damian.sloane@eonx.com>'
 
 branding:
@@ -7,21 +7,21 @@ branding:
   color: 'red'
 
 inputs:
-  PATH_TEMPLATES:
-    description: 'PATH_TEMPLATES'
+  TEMPLATE_ROOT:
+    description: 'Root path to templates'
     required: true
-  PATH_CONFIGS:
-    description: 'PATH_CONFIGS'
+  CONFIG_ROOT:
+    description: 'Root path to the configuration files'
     required: true
-  PATH_OUTPUT:
-    description: 'Path where generated templates will be saved'
+  OUTPUT_PATH:
+    description: 'Path where generated templates will be output'
     required: true
-  OUTPUT_PREFIX:
-    description: 'Prefix added to the start of all output filenames'
+  OUTPUT_FILENAME_PREFIX:
+    description: 'Prefix appended to the start of all output filenames (Optional)'
     default: ''
     required: false
-  OUTPUT_SUFFIX:
-    description: 'Prefix added to the end of all output filenames'
+  OUTPUT_FILENAME_SUFFIX:
+    description: 'Prefix appended to the end of all output filenames (Optional)'
     default: ''
     required: false
 
@@ -29,8 +29,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.PATH_TEMPLATES }}
-    - ${{ inputs.PATH_CONFIGS }}
-    - ${{ inputs.PATH_OUTPUT }}
-    - ${{ inputs.OUTPUT_PREFIX }}
-    - ${{ inputs.OUTPUT_SUFFIX }}
+    - ${{ inputs.TEMPLATE_ROOT }}
+    - ${{ inputs.CONFIG_ROOT }}
+    - ${{ inputs.OUTPUT_PATH }}
+    - ${{ inputs.OUTPUT_FILENAME_PREFIX }}
+    - ${{ inputs.OUTPUT_FILENAME_SUFFIX }}

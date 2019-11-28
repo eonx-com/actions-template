@@ -41,7 +41,7 @@ class TemplateEngine:
         # Load all YAML files
         for root, directories, files in os.walk(path):
             for file in files:
-                if file.endswith('.yaml'):
+                if file.lower().endswith('.yaml') or file.lower().endswith('.yml'):
                     filename = os.path.join(root, file)
 
                     # Read the YAML
@@ -51,8 +51,8 @@ class TemplateEngine:
 
                     # Extract the configuration blocks from the YAML
                     for key, value in yaml_content.items():
-                        if key == 'resources':
-                            # Resource block found
+                        if key == 'render':
+                            # Render block found
                             for resource_id, resource in value.items():
                                 if 'template' not in resource:
                                     print('ERROR: Resource does not define expected template key')

@@ -1,15 +1,15 @@
-# Github Actions: Template Builder (CloudFormation)
+# Github Actions: Template Builder 
 
-This Github action can be used to automate the update/creation of Pingdom health checks
-based on the contents of a YAML file in a Github repository.
+This Github Action can be used to procedurally generate Jinja2 templates based
+on the contents of YAML configuration files.
 
 #### Required Parameters
 
-* PATH_TEMPLATES
+* TEMPLATE_ROOT
             
   Path to template files that are referenced in configuration
 
-* PATH_CONFIGS
+* CONFIG_ROOT
 
   Path to environment/configuration files. Each environment to be deployed should be 
   defined as a separate directory underneath this folder, for example:
@@ -29,24 +29,32 @@ based on the contents of a YAML file in a Github repository.
     - /templates
   ```
 
-* PATH_OUTPUT
+* OUTPUT_PATH
 
   Path where generated templates will be saved
 
-* OUTPUT_PREFIX
+* OUTPUT_FILENAME_PREFIX
 
   Prefix added to the start of all output filenames
 
-* OUTPUT_SUFFIX
+* OUTPUT_FILENAME_SUFFIX
 
   Prefix added to the end of all output filenames
 
+#### Optional Parameters
+
+* ENVIRONMENT
+
+  If specified, this will force the tool to generate only a single environment
+  from the CONFIG_ROOT. By default all folders in the CONFIG_ROOT will be
+  built.
+  
 #### Example Usage
 
 The following example shows how the action can be used in a Github workflow file.
 
 ```yaml
-name: Template Builder (CloudFormation)
+name: Template Builder 
 
 on:
   push:
@@ -63,9 +71,9 @@ jobs:
       - name: Build Templates
         uses: eonx-com/actions-template@v1.0
         with:
-          PATH_TEMPLATES: '/template'
-          PATH_CONFIGS: '/config'
-          PATH_OUTPUT: '/output'
-          OUTPUT_PREFIX: ''
-          OUTPUT_SUFFIX: '.yml'
+          TEMPLATE_ROOT: '/template'
+          CONFIG_ROOT: '/config'
+          OUTPUT_PATH: '/output'
+          OUTPUT_FILENAME_PREFIX: ''
+          OUTPUT_FILENAME_SUFFIX: '.yaml'
 ```

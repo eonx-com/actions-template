@@ -1,0 +1,36 @@
+name: 'eonx-com/actions-template'
+description: 'Build CloudFormation templates from YML configuration files'
+author: 'Damian Sloane <damian.sloane@eonx.com>'
+
+branding:
+  icon: 'x'
+  color: 'red'
+
+inputs:
+  PATH_TEMPLATES:
+    description: 'PATH_TEMPLATES'
+    required: true
+  PATH_CONFIGS:
+    description: 'PATH_CONFIGS'
+    required: true
+  PATH_OUTPUT:
+    description: 'Path where generated templates will be saved'
+    required: true
+  OUTPUT_PREFIX:
+    description: 'Prefix added to the start of all output filenames'
+    default: ''
+    required: false
+  OUTPUT_SUFFIX:
+    description: 'Prefix added to the end of all output filenames'
+    default: ''
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.PATH_TEMPLATES }}
+    - ${{ inputs.PATH_CONFIGS }}
+    - ${{ inputs.PATH_OUTPUT }}
+    - ${{ inputs.OUTPUT_PREFIX }}
+    - ${{ inputs.OUTPUT_SUFFIX }}

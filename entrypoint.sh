@@ -26,6 +26,8 @@ fi
 pip install -r /opt/template/requirements.txt
 
 if [[ "${ENVIRONMENT}" != "*" ]]; then
+  echo "Building '${ENVIRONEMNT}' Environment..."
+
   # Building a single environment from the config root folder
   OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
@@ -45,7 +47,8 @@ if [[ "${ENVIRONMENT}" != "*" ]]; then
     "${OUTPUT_FILENAME}"
 
 else
-  ls -l -R $CONFIG_ROOT;
+  echo "Building All Environments..."
+
   # Building all environments in the config root folder
   for ENVIRONMENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then

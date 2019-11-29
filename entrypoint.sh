@@ -1,10 +1,8 @@
 #!/bin/bash
-
 set -x
 
 # Get parameters from Github Actions workflow
-ENVIRONMENT_SELECTED=$(echo "${1}")
-print "ENVIRONMENT_SELECTED: ${ENVIRONMENT_SELECTED}"
+ENVIRONMENT_SELECTED=${1}
 TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${2}" | tr -s /)
 CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${3}" | tr -s /)
 OUTPUT_PATH=$(echo "${GITHUB_WORKSPACE}/${4}" | tr -s /)

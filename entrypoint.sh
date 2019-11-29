@@ -2,8 +2,8 @@
 
 # Get parameters from Github Actions workflow
 ENVIRONMENT=$(echo ${1})
-TEMPLATE_ROOT=$(echo ${2} | tr -s /)
-CONFIG_ROOT=$(echo ${3} | tr -s /)
+TEMPLATE_ROOT=$(echo ${GITHUB_WORKSPACE}/${2} | tr -s /)
+CONFIG_ROOT=$(echo ${GITHUB_WORKSPACE}/${3} | tr -s /)
 OUTPUT_PATH=$(echo ${4} | tr -s /)
 OUTPUT_FILENAME_PREFIX=${5}
 OUTPUT_FILENAME_SUFFIX=${6}
@@ -24,9 +24,6 @@ fi
 
 # Install Python requirements
 pip install -r ./requirements.txt
-
-TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${TEMPLATE_ROOT}" | tr -s /)
-CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${CONFIG_ROOT}" | tr -s /)
 
 if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder

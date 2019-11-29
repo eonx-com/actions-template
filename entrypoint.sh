@@ -1,7 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -x
 
 # Get parameters from Github Actions workflow
-ENVIRONMENT_SELECTED=$(echo ${1})
+ENVIRONMENT_SELECTED=$(echo "${1}")
 print "ENVIRONMENT_SELECTED: ${ENVIRONMENT_SELECTED}"
 TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${2}" | tr -s /)
 CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${3}" | tr -s /)

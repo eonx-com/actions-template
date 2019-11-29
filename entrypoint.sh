@@ -25,8 +25,8 @@ fi
 # Install Python requirements
 pip install -r /opt/template/requirements.txt
 
-if [[ "${ENVIRONMENT}" != "*" ]]; then
-  echo "Building '${ENVIRONEMNT}' Environment..."
+if [[ "${ENVIRONMENT}" != "*" ]] && [[ ! -s "${ENVIRONMENT}" ]]; then
+  echo "Building '${ENVIRONMENT}' Environment..."
 
   # Building a single environment from the config root folder
   OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)

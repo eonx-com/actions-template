@@ -22,10 +22,6 @@ if [[ ! -d "${OUTPUT_PATH}" ]]; then
     exit 3;
 fi
 
-echo "Template Root: ${TEMPLATE_ROOT}"
-echo "Config Root:   ${CONFIG_ROOT}"
-echo "Output Path:   ${OUTPUT_PATH}"
-
 # Install Python requirements
 pip install -r /opt/template/requirements.txt
 
@@ -33,8 +29,14 @@ if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder
   OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
+  echo "Building: ${ENVIRONMENT}"
+  echo "Output Filename: ${OUTPUT_FILENAME}"
+  echo "Template Root: ${TEMPLATE_ROOT}"
+  echo "Config Root:   ${CONFIG_ROOT}"
+  echo "Output Path:   ${OUTPUT_PATH}"
+
+
   # Build the template
-  echo "Building: ${OUTPUT_FILENAME}"
   python /opt/template/template.py \
     "${ENVIRONMENT}" \
     "${TEMPLATE_ROOT}" \
@@ -49,8 +51,13 @@ else
           ENVIRONMENT_CURRENT=$(basename ${ENVIRONMENT_CURRENT})
           OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_CODE}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
+          echo "Building: ${ENVIRONMENT_CURRENT}"
+          echo "Output Filename: ${OUTPUT_FILENAME}"
+          echo "Template Root: ${TEMPLATE_ROOT}"
+          echo "Config Root:   ${CONFIG_ROOT}"
+          echo "Output Path:   ${OUTPUT_PATH}"
+
           # Build the template
-          echo "Building: ${OUTPUT_FILENAME}"
           python /opt/template/template.py \
             "${ENVIRONMENT_CURRENT}" \
             "${TEMPLATE_ROOT}" \

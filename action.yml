@@ -10,7 +10,7 @@ inputs:
   ENVIRONMENT:
     description: 'Environment to build (if asterisk, all environment in the config root will be built)'
     default: '*'
-    required: false
+    required: true
   TEMPLATE_ROOT:
     description: 'Root path to templates'
     required: true

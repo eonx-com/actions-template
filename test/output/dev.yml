@@ -1,0 +1,23 @@
+ AWSTemplateFormatVersion: "2010-09-09"
+ Description: "Example Infrastructure Deployment (Development Environment)"
+ Resources:
+    ExampleDevBucket1:
+     Type: AWS::S3::Bucket
+     Properties:
+       BucketName: bucket-1.dev.example.eonx-poc.com
+    ExampleDevBucket2:
+     Type: AWS::S3::Bucket
+     Properties:
+       BucketName: bucket-2.dev.example.eonx-poc.com
+ Outputs:
+    ExampleDevBucket1:
+     Value: !Ref ExampleDevBucket1
+     Export:
+       Description: This is the development bucket 1
+       Name: bucket-1.dev.example.eonx-poc.com
+    ExampleDevBucket2:
+     Value: !Ref ExampleDevBucket2
+     Export:
+       Description: This is the development bucket 2
+       Name: bucket-2.dev.example.eonx-poc.com
+

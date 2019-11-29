@@ -1,0 +1,10 @@
+{{ to_aws_resource_id(name, environment) }}:
+  Value: !Ref {{ to_aws_resource_id(name, environment) }}
+  Export:
+    {# Add description to the S3 resource if one was specified #}
+    {% if is_empty(description) == False %}
+    Description: {{ description }}
+    {% endif %}
+
+    {# Set S3 bucket name following convention (name.project.environment.domain) #}
+    Name: {{ to_aws_domain(name, environment) }}

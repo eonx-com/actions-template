@@ -28,7 +28,14 @@ class TemplateEngine:
         TemplateEngine.config_path = config_root
         TemplateEngine.template_path = template_root
 
-        yaml_environment_data = {'environment': environment}
+        yaml_environment_data = {
+            'id': environment,
+            'paths': {
+                'template': template_root,
+                'config': config_root
+            },
+            'data': {}
+        }
         yaml_block_data = {}
         yaml_resource_templates = {}
 
@@ -47,19 +54,25 @@ class TemplateEngine:
                     file.close()
 
                     # Extract the configuration blocks from the YAML
-                    for key, value in yaml_content.items():
-                        if key == 'render':
+                    for block_type, block in yaml_content.items():
+                        if block_type == 'render':
                             # Render block found
-                            for block_id, block in value.items():
-                                if 'template' not in block:
-                                    print('ERROR: Render block did not specify template name')
-                                    exit(1)
-                                yaml_resource_templates[block_id] = TemplateEngine.load_template_file(
-                                    block['template'])
-                                yaml_block_data[block_id] = block
-                        elif key == 'environment':
-                            # Environment configuration found
-                            yaml_environment_data.update(value)
+                            if 'template' not in block:
+                                print('ERROR: Render block did not specify template name ({filename})'.format(filename=filename))
+                                exit(1)
+                            template = block['template']
+
+                            # Get data for the template
+                            if 'data' in block:
+                                data = block['data']
+                            else:
+                                data = {}
+
+                            yaml_resource_templates[template] = TemplateEngine.load_template_file(template)
+                            yaml_block_data[template] = data
+                        elif block_type == 'environment':
+                            # Environment data block found
+                            yaml_environment_data['data'].update(block)
 
         return TemplateEngine.create_template(
             environment_data=yaml_environment_data,
@@ -86,13 +99,13 @@ class TemplateEngine:
         blocks = []
 
         for block_id, block in block_data.items():
-            data = environment_data
-            data.update({
-                'block_id': block_id,
-                'this': block,
-                'data': environment_data,
-                'environment': environment_data['environment']
-            })
+            data = {
+                'environment': environment_data,
+                'this': {
+                    'id': block_id,
+                    'data': block
+                }
+            }
 
             blocks.append(TemplateBuilder.template_render(content=block_templates[block_id], data=data))
 
@@ -102,7 +115,7 @@ class TemplateEngine:
             lines = block.split('\n')
             for line in lines:
                 if len(line.strip()) > 0:
-                    file_output += ' {line}\n'.format(line=line.rstrip().replace('\t', '    '))
+                    file_output += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
             file_output += '\n'
 
         return file_output

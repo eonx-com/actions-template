@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Example Infrastructure Deployment (Production Environment)"
+Resources:
+   ExampleProdBucket1:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: bucket-1.prod.example.eonx-poc.com
+   ExampleProdBucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: bucket-2.prod.example.eonx-poc.com
+Outputs:
+   ExampleProdBucket1:
+    Value: !Ref ExampleProdBucket1
+    Export:
+      Description: This is the production bucket 1
+      Name: bucket-1.prod.example.eonx-poc.com
+   ExampleProdBucket2:
+    Value: !Ref ExampleProdBucket2
+    Export:
+      Description: This is the production bucket 2
+      Name: bucket-2.prod.example.eonx-poc.com
+

@@ -1,0 +1,8 @@
+render:
+  template: product
+  data:
+    buckets:
+      - name: bucket-1
+        description: This is the production bucket 1
+      - name: bucket-2
+        description: This is the production bucket 2

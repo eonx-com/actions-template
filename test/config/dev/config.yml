@@ -1,0 +1,4 @@
+environment:
+  project: example
+  domain: eonx-poc.com
+  description: Example Infrastructure Deployment (Development Environment)

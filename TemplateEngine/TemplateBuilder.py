@@ -1,3 +1,5 @@
+import re
+
 from jinja2 import Environment, FileSystemLoader
 
 import base64
@@ -26,6 +28,8 @@ class TemplateBuilder:
         template.globals['to_upper'] = TemplateBuilder.to_upper
         template.globals['to_lower'] = TemplateBuilder.to_lower
         template.globals['to_csv'] = TemplateBuilder.to_csv
+        template.globals['to_aws_resource_id'] = TemplateBuilder.to_aws_resource_id
+        template.globals['to_aws_domain'] = TemplateBuilder.to_aws_domain
         template.globals['len'] = TemplateBuilder.len
         template.globals['coalesce'] = TemplateBuilder.coalesce
         template.globals['is_empty'] = TemplateBuilder.is_empty
@@ -41,13 +45,103 @@ class TemplateBuilder:
         return template.render(data)
 
     @staticmethod
-    def load_template(filename, indent=0, indent_width=1, indent_first=False, indent_character=' '):
+    def to_aws_resource_id(name, environment):
+        """
+        Using an environments data, convert the name to AwsResourceId format
+
+        :type name: str
+        :param name: Name of the resource
+
+        :type environment: dict
+        :param environment: Environment dictionary
+
+        :return: AWS resource ID string
+        """
+        environment_data = environment['data']
+
+        environment_id = TemplateBuilder.to_camel(environment['id'])
+        project_id = TemplateBuilder.to_camel(environment_data['project'])
+        name = TemplateBuilder.to_camel(name)
+
+        return "{project_id}{environment_id}{name}".format(
+            environment_id=environment_id,
+            project_id=project_id,
+            name=name
+        )
+
+    @staticmethod
+    def to_aws_domain(name, environment):
+        """
+        Using an environments data, convert the name to resource.environment.domain.com format
+
+        :type name: str
+        :param name: Name of the resource
+
+        :type environment: dict
+        :param environment: Environment dictionary
+
+        :return: AWS resource ID string
+        """
+        environment_data = environment['data']
+
+        environment_id = TemplateBuilder.to_snake(environment['id'])
+        project_id = TemplateBuilder.to_snake(environment_data['project'])
+        domain = TemplateBuilder.to_snake(environment_data['domain'])
+        name = TemplateBuilder.to_snake(name)
+
+        return "{name}.{environment_id}.{project_id}.{domain}".format(
+            name=name,
+            environment_id=environment_id,
+            project_id=project_id,
+            domain=domain
+        )
+
+    @staticmethod
+    def to_snake(value, separator='-') -> str:
+        """
+        :type value: str
+        :param value: String to convert
+
+        :type separator: str
+        :param separator: The separator to use
+
+        :return: The input string converted to snake-case
+        """
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1{separator}\2'.format(separator=separator), value)
+        return re.sub('([a-z0-9])([A-Z])', r'\1{separator}\2', s1).format(separator=separator).lower()
+
+    @staticmethod
+    def load_template(filename, data=None, indent=0, indent_width=1, indent_first=False, indent_character=' '):
+        """
+        Load template inside another template
+
+        :param filename:
+        :param data:
+        :param indent:
+        :param indent_width:
+        :param indent_first:
+        :param indent_character:
+        """
+        environment = TemplateBuilder.last_data['environment']
+        template_root = environment['paths']['template']
+        template_filename = '{template_root}/{filename}'.format(
+            template_root=template_root.strip('/'),
+            filename=filename.lstrip('/')
+        )
+
         # Read the file and return its content
-        file_object = open(filename, 'rt')
-        template_content = file_object.read()
+        file_object = open(template_filename, 'rt')
+        content = file_object.read()
         file_object.close()
 
-        rendered_content = TemplateBuilder.template_render(template_content, TemplateBuilder.last_data)
+        if data is None:
+            data = TemplateBuilder.last_data
+
+        data['environment'] = environment
+        rendered_content = TemplateBuilder.template_render(
+            content=content,
+            data=data
+        )
 
         if indent > 0:
             lines = rendered_content.split('\n')

@@ -1,0 +1,14 @@
+{# CloudFormation Version Header  #}
+{{ load_template('cloudformation/header.j2') }}
+
+Resources:
+  {# Create S3 Bucket Resources #}
+  {% for bucket in this.data.buckets %}
+  {{ load_template('cloudformation/s3/bucket-resource.j2', indent=2, data=bucket) }}
+  {% endfor %}
+
+Outputs:
+  {# Create S3 Bucket Outputs #}
+  {% for bucket in this.data.buckets %}
+  {{ load_template('cloudformation/s3/bucket-output.j2', indent=2, data=bucket) }}
+  {% endfor %}

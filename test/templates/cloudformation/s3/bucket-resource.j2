@@ -1,0 +1,4 @@
+{{ to_aws_resource_id(name, environment) }}:
+  Type: AWS::S3::Bucket
+  Properties:
+    BucketName: {{ to_aws_domain(name, environment) }}

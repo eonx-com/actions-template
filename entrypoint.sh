@@ -29,12 +29,13 @@ if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder
   OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
-  echo "Building: ${ENVIRONMENT}"
-  echo "Output Filename: ${OUTPUT_FILENAME}"
-  echo "Template Root: ${TEMPLATE_ROOT}"
-  echo "Config Root:   ${CONFIG_ROOT}"
-  echo "Output Path:   ${OUTPUT_PATH}"
-
+  echo "Building:        '${ENVIRONMENT}'"
+  echo "Output Filename: '${OUTPUT_FILENAME}'"
+  echo "Template Root:   '${TEMPLATE_ROOT}'"
+  echo "Config Root:     '${CONFIG_ROOT}'"
+  echo "Output Path:     '${OUTPUT_PATH}'"
+  echo "Output Prefix:   '${OUTPUT_FILENAME_PREFIX}'"
+  echo "Output Suffix:   '${OUTPUT_FILENAME_SUFFIX}'"
 
   # Build the template
   python /opt/template/template.py \
@@ -51,11 +52,13 @@ else
           ENVIRONMENT_CURRENT=$(basename ${ENVIRONMENT_CURRENT})
           OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_CODE}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
-          echo "Building: ${ENVIRONMENT_CURRENT}"
-          echo "Output Filename: ${OUTPUT_FILENAME}"
-          echo "Template Root: ${TEMPLATE_ROOT}"
-          echo "Config Root:   ${CONFIG_ROOT}"
-          echo "Output Path:   ${OUTPUT_PATH}"
+          echo "Building:        '${ENVIRONMENT_CURRENT}'"
+          echo "Output Filename: '${OUTPUT_FILENAME}'"
+          echo "Template Root:   '${TEMPLATE_ROOT}'"
+          echo "Config Root:     '${CONFIG_ROOT}'"
+          echo "Output Path:     '${OUTPUT_PATH}'"
+          echo "Output Prefix:   '${OUTPUT_FILENAME_PREFIX}'"
+          echo "Output Suffix:   '${OUTPUT_FILENAME_SUFFIX}'"
 
           # Build the template
           python /opt/template/template.py \

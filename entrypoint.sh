@@ -25,12 +25,12 @@ fi
 # Install Python requirements
 pip install -r ./requirements.txt
 
-if [[ "${ENVIRONMENT}" != "*" ]]; then
+TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${TEMPLATE_ROOT}" | tr -s /)
+CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${CONFIG_ROOT}" | tr -s /)
 
+if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder
   OUTPUT_FILENAME=$(echo "${GITHUB_WORKSPACE}/${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
-  TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${TEMPLATE_ROOT}" | tr -s /)
-  CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${CONFIG_ROOT}" | tr -s /)
 
   # Build the template
   echo "Building: ${OUTPUT_FILENAME}"

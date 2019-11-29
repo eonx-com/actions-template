@@ -10,15 +10,15 @@ OUTPUT_FILENAME_SUFFIX=${6}
 
 # Validate all paths specified can be found
 if [[ ! -d "${TEMPLATE_ROOT}" ]]; then
-    echo "ERROR: The template path specified could not be found"
+    echo "ERROR: The template path specified (${TEMPLATE_ROOT}) could not be found"
     exit 1;
 fi
 if [[ ! -d "${CONFIG_ROOT}" ]]; then
-    echo "ERROR: The environment path specified could not be found"
+    echo "ERROR: The config path specified (${CONFIG_ROOT}) could not be found"
     exit 2;
 fi
 if [[ ! -d "${OUTPUT_PATH}" ]]; then
-    echo "ERROR: The output path specified could not be found"
+    echo "ERROR: The output path specified (${OUTPUT_PATH}) could not be found"
     exit 3;
 fi
 

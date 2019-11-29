@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Get parameters from Github Actions workflow
-ENVIRONMENT=$(echo ${1})
+ENVIRONMENT_SELECTED=$(echo ${1})
 TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${2}" | tr -s /)
 CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${3}" | tr -s /)
 OUTPUT_PATH=$(echo "${GITHUB_WORKSPACE}/${4}" | tr -s /)
@@ -25,13 +25,13 @@ fi
 # Install Python requirements
 pip install -r /opt/template/requirements.txt
 
-if [[ "${ENVIRONMENT}" != "*" ]] && [[ ! -s "${ENVIRONMENT}" ]]; then
-  echo "Building '${ENVIRONMENT}' Environment..."
+if [[ "${ENVIRONMENT_SELECTED}" != "*" ]] && [[ ! -z "${ENVIRONMENT_SELECTED}" ]]; then
+  echo "Building '${ENVIRONMENT_SELECTED}' Environment..."
 
   # Building a single environment from the config root folder
-  OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
+  OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_SELECTED}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
-  echo "Building:        '${ENVIRONMENT}'"
+  echo "Building:        '${ENVIRONMENT_SELECTED}'"
   echo "Output Filename: '${OUTPUT_FILENAME}'"
   echo "Template Root:   '${TEMPLATE_ROOT}'"
   echo "Config Root:     '${CONFIG_ROOT}'"
@@ -50,12 +50,12 @@ else
   echo "Building All Environments..."
 
   # Building all environments in the config root folder
-  for ENVIRONMENT in ${CONFIG_ROOT}/* ; do
+  for ENVIRONMENT_CURRENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then
-          ENVIRONMENT_CURRENT=$(basename ${ENVIRONMENT_CURRENT})
+          ENVIRONMENT_SELECTED=$(basename ${ENVIRONMENT_CURRENT})
           OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_CODE}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
-          echo "Building:        '${ENVIRONMENT_CURRENT}'"
+          echo "Building:        '${ENVIRONMENT_SELECTED}'"
           echo "Output Filename: '${OUTPUT_FILENAME}'"
           echo "Template Root:   '${TEMPLATE_ROOT}'"
           echo "Config Root:     '${CONFIG_ROOT}'"
@@ -65,7 +65,7 @@ else
 
           # Build the template
           python /opt/template/template.py \
-            "${ENVIRONMENT_CURRENT}" \
+            "${ENVIRONMENT_SELECTED}" \
             "${TEMPLATE_ROOT}" \
             "${CONFIG_ROOT}" \
             "${OUTPUT_FILENAME}"

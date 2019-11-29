@@ -23,7 +23,7 @@ if [[ ! -d "${OUTPUT_PATH}" ]]; then
 fi
 
 # Install Python requirements
-pip install -r ./requirements.txt
+pip install -r ${GITHUB_WORKSPACE}/requirements.txt
 
 if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder
@@ -31,7 +31,7 @@ if [[ "${ENVIRONMENT}" != "*" ]]; then
 
   # Build the template
   echo "Building: ${OUTPUT_FILENAME}"
-  python template.py \
+  python /opt/template/template.py \
     "${ENVIRONMENT}" \
     "${TEMPLATE_ROOT}" \
     "${CONFIG_ROOT}" \
@@ -47,7 +47,7 @@ else
 
           # Build the template
           echo "Building: ${OUTPUT_FILENAME}"
-          python template.py \
+          python /opt/template/template.py \
             "${ENVIRONMENT_CURRENT}" \
             "${TEMPLATE_ROOT}" \
             "${CONFIG_ROOT}" \

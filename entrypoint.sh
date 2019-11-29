@@ -54,7 +54,7 @@ else
   for ENVIRONMENT_CURRENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then
           ENVIRONMENT_SELECTED=$(basename ${ENVIRONMENT_CURRENT})
-          OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_CODE}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
+          OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_SELECTED}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 
           echo "Building:        '${ENVIRONMENT_SELECTED}'"
           echo "Output Filename: '${OUTPUT_FILENAME}'"

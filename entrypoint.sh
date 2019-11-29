@@ -23,7 +23,7 @@ if [[ ! -d "${OUTPUT_PATH}" ]]; then
 fi
 
 # Install Python requirements
-pip install -r ${GITHUB_WORKSPACE}/requirements.txt
+pip install -r /opt/template/requirements.txt
 
 if [[ "${ENVIRONMENT}" != "*" ]]; then
   # Building a single environment from the config root folder

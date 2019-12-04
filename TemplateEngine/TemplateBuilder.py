@@ -165,15 +165,15 @@ class TemplateBuilder:
 
         # If the file doesn't exist, try with j2
         if os.path.exists(template_filename) is False:
-            template_filename = "{base_filename}.j2"
+            template_filename = "{base_filename}.j2".format(base_filename=base_filename)
 
         # Try with J2
         if os.path.exists(template_filename) is False:
-            template_filename = "{base_filename}.J2"
+            template_filename = "{base_filename}.J2".format(base_filename=base_filename)
 
         # If we haven't found it- die
         if os.path.exists(template_filename) is False:
-            raise Exception('The requested template ({base_filename}) could not be found'.format(base_filename=base_filename))
+            raise Exception('The requested template ({template_filename}) could not be found'.format(template_filename=template_filename))
 
         # Read the file and return its content
         file_object = open(template_filename, 'rt')

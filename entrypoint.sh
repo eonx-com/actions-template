@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 # Get parameters from Github Actions workflow
 ENVIRONMENT_SELECTED=${1}

@@ -60,10 +60,10 @@ class TemplateBuilder:
         environment_id = TemplateBuilder.last_data['environment']['id']
         print(TemplateBuilder.last_data)
         # If no project is specified use a placeholder 'Untitled'
-        if 'project' not in TemplateBuilder.last_data['environment']:
+        if 'project' not in TemplateBuilder.last_data['environment']['data']:
             project_name = 'Untitled'
         else:
-            project_name = TemplateBuilder.last_data['environment']['project']
+            project_name = TemplateBuilder.last_data['environment']['data']['project']
 
         environment_id = TemplateBuilder.to_camel(environment_id)
         project_id = TemplateBuilder.to_camel(project_name)
@@ -91,14 +91,14 @@ class TemplateBuilder:
         environment_id = TemplateBuilder.last_data['environment']['id']
 
         # If no project is specified use a placeholder 'Untitled'
-        if 'project' not in TemplateBuilder.last_data['environment']:
+        if 'project' not in TemplateBuilder.last_data['environment']['data']:
             project_name = 'Untitled'
         else:
-            project_name = TemplateBuilder.last_data['environment']['project']
+            project_name = TemplateBuilder.last_data['environment']['data']['project']
 
         # If no domain is specified use a placeholder 'domain.com'
-        if 'domain' in TemplateBuilder.last_data['environment']:
-            domain = TemplateBuilder.last_data['environment']['domain']
+        if 'domain' in TemplateBuilder.last_data['environment']['data']:
+            domain = TemplateBuilder.last_data['environment']['data']['domain']
         else:
             domain = 'domain.com'
 

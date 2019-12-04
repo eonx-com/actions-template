@@ -45,7 +45,7 @@ class TemplateBuilder:
         return template.render(data)
 
     @staticmethod
-    def to_aws_resource_id(name, environment):
+    def to_aws_resource_id(name):
         """
         Using an environments data, convert the name to AwsResourceId format
 
@@ -57,9 +57,9 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_data = environment['data']
+        environment_data = TemplateBuilder.last_data['environment']
 
-        environment_id = TemplateBuilder.to_camel(environment['id'])
+        environment_id = TemplateBuilder.to_camel(environment_data['id'])
         project_id = TemplateBuilder.to_camel(environment_data['project'])
         name = TemplateBuilder.to_camel(name)
 
@@ -70,7 +70,7 @@ class TemplateBuilder:
         )
 
     @staticmethod
-    def to_aws_domain(name, environment):
+    def to_aws_domain(name):
         """
         Using an environments data, convert the name to resource.environment.domain.com format
 
@@ -82,9 +82,9 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_data = environment['data']
+        environment_data = TemplateBuilder.last_data['environment']
 
-        environment_id = TemplateBuilder.to_snake(environment['id'])
+        environment_id = TemplateBuilder.to_snake(environment_data['id'])
         project_id = TemplateBuilder.to_snake(environment_data['project'])
         domain = TemplateBuilder.to_snake(environment_data['domain'])
         name = TemplateBuilder.to_snake(name)

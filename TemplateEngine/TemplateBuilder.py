@@ -1,3 +1,4 @@
+import os
 import re
 
 from jinja2 import Environment, FileSystemLoader
@@ -59,7 +60,7 @@ class TemplateBuilder:
         """
         environment = TemplateBuilder.last_data['environment']
         environment_id = environment['id']
-        
+
         # If no project is specified use a placeholder 'Untitled'
         if 'project' not in environment['data']:
             project_name = 'Untitled'
@@ -155,10 +156,24 @@ class TemplateBuilder:
         """
         environment = TemplateBuilder.last_data['environment']
         template_root = environment['paths']['template']
-        template_filename = '{template_root}/{filename}'.format(
+        base_filename = '{template_root}/{filename}'.format(
             template_root=template_root.rstrip('/'),
             filename=filename.lstrip('/')
         )
+
+        template_filename = base_filename
+
+        # If the file doesn't exist, try with j2
+        if os.path.exists(template_filename) is False:
+            template_filename = "{base_filename}.j2"
+
+        # Try with J2
+        if os.path.exists(template_filename) is False:
+            template_filename = "{base_filename}.J2"
+
+        # If we haven't found it- die
+        if os.path.exists(template_filename) is False:
+            raise Exception('The requested template ({base_filename}) could not be found'.format(base_filename=base_filename))
 
         # Read the file and return its content
         file_object = open(template_filename, 'rt')

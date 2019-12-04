@@ -57,10 +57,16 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_data = TemplateBuilder.last_data['environment']
+        environment_id = TemplateBuilder.last_data['environment']['id']
 
-        environment_id = TemplateBuilder.to_camel(environment_data['id'])
-        project_id = TemplateBuilder.to_camel(environment_data['project'])
+        # If no project is specified use a placeholder 'Untitled'
+        if 'project' not in TemplateBuilder.last_data['environment']:
+            project_name = 'Untitled'
+        else:
+            project_name = TemplateBuilder.last_data['environment']['project']
+
+        environment_id = TemplateBuilder.to_camel(environment_id)
+        project_id = TemplateBuilder.to_camel(project_name)
         name = TemplateBuilder.to_camel(name)
 
         return "{project_id}{environment_id}{name}".format(
@@ -82,11 +88,23 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_data = TemplateBuilder.last_data['environment']
+        environment_id = TemplateBuilder.last_data['environment']['id']
 
-        environment_id = TemplateBuilder.to_snake(environment_data['id'])
-        project_id = TemplateBuilder.to_snake(environment_data['project'])
-        domain = TemplateBuilder.to_snake(environment_data['domain'])
+        # If no project is specified use a placeholder 'Untitled'
+        if 'project' not in TemplateBuilder.last_data['environment']:
+            project_name = 'Untitled'
+        else:
+            project_name = TemplateBuilder.last_data['environment']['project']
+
+        # If no domain is specified use a placeholder 'domain.com'
+        if 'domain' in TemplateBuilder.last_data['environment']:
+            domain = TemplateBuilder.last_data['environment']['domain']
+        else:
+            domain = 'domain.com'
+
+        environment_id = TemplateBuilder.to_snake(environment_id)
+        project_id = TemplateBuilder.to_snake(project_name)
+        domain = TemplateBuilder.to_snake(domain)
         name = TemplateBuilder.to_snake(name)
 
         return "{name}.{environment_id}.{project_id}.{domain}".format(

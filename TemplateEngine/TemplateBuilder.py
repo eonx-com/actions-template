@@ -115,17 +115,28 @@ class TemplateBuilder:
         """
         Load template inside another template
 
+        :type filename: str
         :param filename:
+
+        :type data: dict or None
         :param data:
+
+        :type indent: int
         :param indent:
+
+        :type indent_width:
         :param indent_width:
+
+        :type indent_first: bool
         :param indent_first:
+
+        :type indent_character: str
         :param indent_character:
         """
         environment = TemplateBuilder.last_data['environment']
         template_root = environment['paths']['template']
         template_filename = '{template_root}/{filename}'.format(
-            template_root=template_root.strip('/'),
+            template_root=template_root.rstrip('/'),
             filename=filename.lstrip('/')
         )
 

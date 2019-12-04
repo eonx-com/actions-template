@@ -58,7 +58,7 @@ class TemplateBuilder:
         :return: AWS resource ID string
         """
         environment_id = TemplateBuilder.last_data['environment']['id']
-
+        print(TemplateBuilder.last_data)
         # If no project is specified use a placeholder 'Untitled'
         if 'project' not in TemplateBuilder.last_data['environment']:
             project_name = 'Untitled'

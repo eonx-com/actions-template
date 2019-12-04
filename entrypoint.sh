@@ -64,8 +64,6 @@ else
           echo "Output Prefix:   '${OUTPUT_FILENAME_PREFIX}'"
           echo "Output Suffix:   '${OUTPUT_FILENAME_SUFFIX}'"
 
-          ls -l -R ${GITHUB_WORKSPACE};
-
           # Build the template
           python /opt/template/template.py \
             "${ENVIRONMENT_SELECTED}" \

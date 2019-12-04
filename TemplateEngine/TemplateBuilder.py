@@ -57,13 +57,14 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_id = TemplateBuilder.last_data['environment']['id']
-        print(TemplateBuilder.last_data)
+        environment = TemplateBuilder.last_data['environment']
+        environment_id = environment['id']
+
         # If no project is specified use a placeholder 'Untitled'
-        if 'project' not in TemplateBuilder.last_data['environment']['data']:
+        if 'project' not in environment['data']:
             project_name = 'Untitled'
         else:
-            project_name = TemplateBuilder.last_data['environment']['data']['project']
+            project_name = environment['project']
 
         environment_id = TemplateBuilder.to_camel(environment_id)
         project_id = TemplateBuilder.to_camel(project_name)
@@ -88,17 +89,18 @@ class TemplateBuilder:
 
         :return: AWS resource ID string
         """
-        environment_id = TemplateBuilder.last_data['environment']['id']
+        environment = TemplateBuilder.last_data['environment']
+        environment_id = environment['id']
 
         # If no project is specified use a placeholder 'Untitled'
-        if 'project' not in TemplateBuilder.last_data['environment']['data']:
+        if 'project' not in environment['data']:
             project_name = 'Untitled'
         else:
-            project_name = TemplateBuilder.last_data['environment']['data']['project']
+            project_name = environment['project']
 
         # If no domain is specified use a placeholder 'domain.com'
-        if 'domain' in TemplateBuilder.last_data['environment']['data']:
-            domain = TemplateBuilder.last_data['environment']['data']['domain']
+        if 'domain' in environment['data']:
+            domain = environment['data']['domain']
         else:
             domain = 'domain.com'
 

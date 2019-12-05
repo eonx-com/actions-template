@@ -115,9 +115,9 @@ class TemplateEngine:
 
             data = {
                 'environment': environment_data,
+                'data': block['data'],
                 'this': {
                     'id': block_id,
-                    'data': block['data'],
                     'filename': filename,
                     'extension': extension,
                     'directory': path_components[-1]

@@ -115,7 +115,7 @@ class TemplateEngine:
                 'this': {
                     'id': block_id,
                     'data': block['data'],
-                    'filename': filename
+                    'filename': filename,
                     'extension': extension
                 }
             }

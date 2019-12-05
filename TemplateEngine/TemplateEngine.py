@@ -68,8 +68,6 @@ class TemplateEngine:
                             else:
                                 data = {}
 
-                            data['filename'] = os.path.basename(filename)
-
                             yaml_resource_templates[template] = TemplateEngine.load_template_file(template)
                             yaml_block_data[template] = data
                         elif block_type == 'environment':

@@ -46,7 +46,7 @@ class TemplateBuilder:
         return template.render(data)
 
     @staticmethod
-    def to_aws_resource_id(name):
+    def to_aws_resource_id(name, invert=False):
         """
         Using an environments data, convert the name to AwsResourceId format
 
@@ -55,6 +55,9 @@ class TemplateBuilder:
 
         :type environment: dict
         :param environment: Environment dictionary
+
+        :type invert: bool
+        :param invert: Invert project/environment order
 
         :return: AWS resource ID string
         """
@@ -70,6 +73,13 @@ class TemplateBuilder:
         environment_id = TemplateBuilder.to_camel(environment_id)
         project_id = TemplateBuilder.to_camel(project_name)
         name = TemplateBuilder.to_camel(name)
+
+        if invert is True:
+            return "{environment_id}{project_id}{name}".format(
+                environment_id=environment_id,
+                project_id=project_id,
+                name=name
+            )
 
         return "{project_id}{environment_id}{name}".format(
             environment_id=environment_id,

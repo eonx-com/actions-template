@@ -105,10 +105,13 @@ class TemplateEngine:
             basename = os.path.basename(block['filename'])
             split_basename = os.path.splitext(basename)
             filename = split_basename[0]
+
             if len(split_basename) > 1:
                 extension = split_basename[1]
             else:
                 extension = ''
+
+            path_components = block['filename'][:-len(basename)].strip('/').split('/')
 
             data = {
                 'environment': environment_data,
@@ -116,7 +119,8 @@ class TemplateEngine:
                     'id': block_id,
                     'data': block['data'],
                     'filename': filename,
-                    'extension': extension
+                    'extension': extension,
+                    'directory': path_components[-1]
                 }
             }
 

@@ -102,12 +102,21 @@ class TemplateEngine:
         blocks = []
 
         for block_id, block in block_data.items():
+            basename = os.path.basename(block['filename'])
+            split_basename = os.path.splitext(basename)
+            filename = split_basename[0]
+            if len(split_basename) > 1:
+                extension = split_basename[1]
+            else:
+                extension = ''
+
             data = {
                 'environment': environment_data,
                 'this': {
                     'id': block_id,
                     'data': block['data'],
-                    'filename': block['filename']
+                    'filename': filename
+                    'extension': extension
                 }
             }
 

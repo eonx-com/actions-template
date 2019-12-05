@@ -69,7 +69,10 @@ class TemplateEngine:
                                 data = {}
 
                             yaml_resource_templates[template] = TemplateEngine.load_template_file(template)
-                            yaml_block_data[template] = data
+                            yaml_block_data[template] = {
+                                'filename': filename,
+                                'data': data
+                            }
                         elif block_type == 'environment':
                             # Environment data block found
                             yaml_environment_data['data'].update(block)
@@ -103,7 +106,8 @@ class TemplateEngine:
                 'environment': environment_data,
                 'this': {
                     'id': block_id,
-                    'data': block
+                    'data': block['data'],
+                    'filename': block['filename']
                 }
             }
 

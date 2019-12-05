@@ -26,6 +26,7 @@ class TemplateBuilder:
         template = environment.from_string(content)
         template.globals['to_camel'] = TemplateBuilder.to_camel
         template.globals['to_title'] = TemplateBuilder.to_title
+        template.globals['to_snake'] = TemplateBuilder.to_snake
         template.globals['to_upper'] = TemplateBuilder.to_upper
         template.globals['to_lower'] = TemplateBuilder.to_lower
         template.globals['to_csv'] = TemplateBuilder.to_csv

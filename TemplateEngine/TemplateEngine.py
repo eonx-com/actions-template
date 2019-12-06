@@ -76,18 +76,21 @@ class TemplateEngine:
                     if 'data' in template.keys():
                         template_data = template['data']
 
+                    data = {
+                        'environment': environment,
+                        'config': config,
+                        'data': template_data,
+                        'template': {
+                            'path': path,
+                            'directory': path_components[-1],
+                            'filename': split_basename[0],
+                            'extension': extension
+                        }
+                    }
+
                     template_rendered = TemplateBuilder.template_render(
                         content=template_content,
-                        data={
-                            'environment': environment,
-                            'data': template_data,
-                            'template': {
-                                'path': path,
-                                'directory': path_components[-1],
-                                'filename': split_basename[0],
-                                'extension': extension
-                            }
-                        }
+                        data=data
                     )
 
                     # Remove blank lines from the template, and standard tabs to 4 spaces

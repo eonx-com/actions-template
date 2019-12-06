@@ -203,26 +203,10 @@ class TemplateBuilder:
         content = file_object.read()
         file_object.close()
 
-        if data is None:
-            data = TemplateBuilder.last_data
-
-        data['environment'] = environment
         rendered_content = TemplateBuilder.template_render(
             content=content,
-            data=data
+            data=TemplateBuilder.last_data.update(data)
         )
-
-        data = {
-            'id': block_id,
-            'environment': environment_data,
-            'data': block['data'],
-            'template': {
-                'path': path,
-                'filename': filename,
-                'extension': extension,
-                'directory': path_components[-1]
-            }
-        }
 
         if indent > 0:
             lines = rendered_content.split('\n')

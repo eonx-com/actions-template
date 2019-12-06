@@ -90,6 +90,9 @@ class TemplateEngine:
                         }
                     }
 
+                    if TemplateBuilder.last_data is None:
+                        TemplateBuilder.last_data = data
+
                     template_rendered = TemplateBuilder.template_render(
                         content=template_content,
                         data=data

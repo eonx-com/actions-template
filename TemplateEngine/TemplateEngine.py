@@ -41,7 +41,7 @@ class TemplateEngine:
                     file.close()
                     for block_id, block in yaml_content.items():
                         if block_id == 'config':
-                            config.update(block_id)
+                            config = config.update(block)
 
         # Render templates
         for root, directories, files in os.walk(path):

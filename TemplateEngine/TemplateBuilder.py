@@ -212,6 +212,18 @@ class TemplateBuilder:
             data=data
         )
 
+        data = {
+            'id': block_id,
+            'environment': environment_data,
+            'data': block['data'],
+            'template': {
+                'path': path,
+                'filename': filename,
+                'extension': extension,
+                'directory': path_components[-1]
+            }
+        }
+
         if indent > 0:
             lines = rendered_content.split('\n')
             rendered_content = ''

@@ -8,12 +8,9 @@ if __name__ == '__main__':
     config_root = sys.argv[3]
     output_filename = sys.argv[4]
 
-    template = TemplateEngine.generate(
+    TemplateEngine.generate(
         environment=environment,
         template_root=template_root,
         config_root=config_root
     )
 
-    file = open(output_filename, 'wt')
-    file.write(template)
-    file.close()

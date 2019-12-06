@@ -28,114 +28,79 @@ class TemplateEngine:
         TemplateEngine.config_path = config_root
         TemplateEngine.template_path = template_root
 
-        yaml_environment_data = {
-            'id': environment,
-            'paths': {
-                'template': template_root,
-                'config': config_root
-            },
-            'data': {}
-        }
-        yaml_block_data = {}
-        yaml_resource_templates = {}
-
-        # Load configuration files
         path = '{config_root}/{environment}'.format(config_root=config_root, environment=environment)
 
-        # Load all YAML files
+        # Load configuration file for the environment
+        config = {}
+        for root, directories, files in os.walk(path):
+            for file in files:
+                if file.lower() == 'config.yaml' or file.lower() == 'config.yml':
+                    filename = os.path.join(root, file)
+                    file = open(filename, 'rt')
+                    yaml_content = yaml.full_load(file)
+                    file.close()
+                    for block_id, block in yaml_content.items():
+                        if id == 'config':
+                            config.update(block_id)
+
+        # Render templates
         for root, directories, files in os.walk(path):
             for file in files:
                 if file.lower().endswith('.yaml') or file.lower().endswith('.yml'):
+                    # Mangle the filename several different ways
                     filename = os.path.join(root, file)
+                    basename = os.path.basename(filename)
+                    path = filename[:-len(basename)].strip('/')
+                    path_components = filename[:-len(basename)].strip('/').split('/')
+                    split_basename = os.path.splitext(basename)
+                    if len(split_basename) > 1:
+                        extension = split_basename[1]
+                    else:
+                        extension = ''
 
-                    # Read the YAML
+                    # Load the YAML content into dictionary
                     file = open(filename, 'rt')
                     yaml_content = yaml.full_load(file)
                     file.close()
 
-                    # Extract the configuration blocks from the YAML
-                    for block_type, block in yaml_content.items():
-                        if block_type == 'render':
-                            # Render block found
-                            if 'template' not in block:
-                                print('ERROR: Render block did not specify template name ({filename})'.format(filename=filename))
-                                exit(1)
-                            template = block['template']
+                    # Skip if no template was defined
+                    if 'template' not in yaml_content.keys():
+                        continue
 
-                            # Get data for the template
-                            if 'data' in block:
-                                data = block['data']
-                            else:
-                                data = {}
+                    # Load the template
+                    template_content = TemplateEngine.load_template_file(yaml_content['template'])
 
-                            yaml_resource_templates[template] = TemplateEngine.load_template_file(template)
-                            yaml_block_data[template] = {
-                                'filename': filename,
-                                'data': data
+                    template_data = {}
+                    if 'data' in yaml_content.keys():
+                        template_data = yaml_content['data']
+
+                    template_rendered = TemplateBuilder.template_render(
+                        content=template_content,
+                        data={
+                            'environment': environment,
+                            'data': template_data,
+                            'template': {
+                                'path': path,
+                                'directory': path_components[-1],
+                                'filename': split_basename[0],
+                                'extension': extension
                             }
-                        elif block_type == 'environment':
-                            # Environment data block found
-                            yaml_environment_data['data'].update(block)
+                        }
+                    )
 
-        return TemplateEngine.create_template(
-            environment_data=yaml_environment_data,
-            block_data=yaml_block_data,
-            block_templates=yaml_resource_templates
-        )
-
-    @staticmethod
-    def create_template(environment_data, block_data, block_templates) -> str:
-        """
-        Create the CloudFormation files resources section
-
-        :type environment_data: dict
-        :param environment_data: Dictionary containing data exposed to all blocks in the environment
-
-        :type block_data: dict
-        :param block_data: Dictionary containing the data supplied to each block
-        
-        :type block_templates: dict
-        :param block_templates: Dictionary containing each of the block templates we need to render
-
-        :return: The compiled output
-        """
-        blocks = []
-
-        for block_id, block in block_data.items():
-            basename = os.path.basename(block['filename'])
-            split_basename = os.path.splitext(basename)
-            filename = split_basename[0]
-
-            if len(split_basename) > 1:
-                extension = split_basename[1]
-            else:
-                extension = ''
-
-            path_components = block['filename'][:-len(basename)].strip('/').split('/')
-
-            data = {
-                'environment': environment_data,
-                'data': block['data'],
-                'this': {
-                    'id': block_id,
-                    'filename': filename,
-                    'extension': extension,
-                    'directory': path_components[-1]
-                }
-            }
-
-            blocks.append(TemplateBuilder.template_render(content=block_templates[block_id], data=data))
-
-        file_output = ''
-
-        for block in blocks:
-            lines = block.split('\n')
-            for line in lines:
-                if len(line.strip()) > 0:
-                    file_output += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
-            file_output += '\n'
-
-        return file_output
+                    # Remove blank lines from the template, and standard tabs to 4 spaces
+                    output_content = ''
+                    lines = template_rendered.split('\n')
+                    for line in lines:
+                        if len(line.strip()) > 0:
+                            output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
+                    output_filename = '{environment}-{filename}.yml'.format(
+                        environment=path_components[-1].lower(),
+                        filename=basename.lower()
+                    )
+                    output_file = open(output_filename, 'wt')
+                    output_file.write(output_content)
+                    output_file.close()
 
     @staticmethod
     def load_template_file(filename) -> str:

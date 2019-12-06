@@ -177,7 +177,7 @@ class TemplateBuilder:
         :type indent_character: str
         :param indent_character:
         """
-        last_data = TemplateBuilder.last_data['environment']
+        last_data = TemplateBuilder.last_data
         template_root = last_data['template']['template_root']
         base_filename = '{template_root}/{filename}'.format(
             template_root=template_root.rstrip('/'),
@@ -203,7 +203,9 @@ class TemplateBuilder:
         content = file_object.read()
         file_object.close()
 
-        rendered_content = TemplateBuilder.template_render(content=content, data=last_data.update(data))
+        last_data['data'] = last_data['data'].update(data)
+
+        rendered_content = TemplateBuilder.template_render(content=content, data=last_data)
 
         if indent > 0:
             lines = rendered_content.split('\n')

@@ -81,6 +81,8 @@ class TemplateEngine:
                         'config': config,
                         'data': template_data,
                         'template': {
+                            'config_root': config_root,
+                            'template_root': template_root,
                             'path': path,
                             'directory': path_components[-1],
                             'filename': split_basename[0],

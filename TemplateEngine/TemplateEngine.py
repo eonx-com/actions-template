@@ -40,7 +40,7 @@ class TemplateEngine:
                     yaml_content = yaml.full_load(file)
                     file.close()
                     for block_id, block in yaml_content.items():
-                        if id == 'config':
+                        if block_id == 'config':
                             config.update(block_id)
 
         # Render templates
@@ -64,6 +64,7 @@ class TemplateEngine:
                     file.close()
 
                     # Skip if no template was defined
+                    print(yaml_content)
                     if 'template' not in yaml_content.keys():
                         continue
 

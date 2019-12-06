@@ -67,12 +67,14 @@ class TemplateEngine:
                     if 'template' not in yaml_content.keys():
                         continue
 
+                    template = yaml_content['template']
+
                     # Load the template
-                    template_content = TemplateEngine.load_template_file(yaml_content['template'])
+                    template_content = TemplateEngine.load_template_file(template['filename'])
 
                     template_data = {}
-                    if 'data' in yaml_content.keys():
-                        template_data = yaml_content['data']
+                    if 'data' in template.keys():
+                        template_data = template['data']
 
                     template_rendered = TemplateBuilder.template_render(
                         content=template_content,

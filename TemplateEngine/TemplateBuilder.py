@@ -42,9 +42,21 @@ class TemplateBuilder:
         template.globals['base64_encode'] = TemplateBuilder.base64_encode
         template.globals['base64_decode'] = TemplateBuilder.base64_decode
         template.globals['load_template'] = TemplateBuilder.load_template
+        template.globals['raise_error'] = TemplateBuilder.raise_error
 
         TemplateBuilder.last_data = data
         return template.render(data)
+
+    @staticmethod
+    def raise_error(error):
+        """
+        Raise an error from template
+
+        :type error: str
+        :param error: Message to display
+        """
+        print('Template Error: {error}'.format(error=error))
+        exit(1)
 
     @staticmethod
     def to_aws_resource_id(name, invert=False):

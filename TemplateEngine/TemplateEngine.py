@@ -107,6 +107,8 @@ class TemplateEngine:
                         environment=path_components[-1].lower(),
                         filename=basename.lower()
                     )
+
+                    print('Writing: {output_filename}'.format(output_filename=output_filename))
                     output_file = open(output_filename, 'wt')
                     output_file.write(output_content)
                     output_file.close()

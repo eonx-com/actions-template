@@ -177,6 +177,9 @@ class TemplateBuilder:
         :type indent_character: str
         :param indent_character:
         """
+        if data is None:
+            data = {}
+
         last_data = TemplateBuilder.last_data
         template_root = last_data['template']['template_root']
         base_filename = '{template_root}/{filename}'.format(

@@ -99,12 +99,14 @@ class TemplateEngine:
                     # Remove blank lines from the template, and standard tabs to 4 spaces
                     output_content = ''
                     lines = template_rendered.split('\n')
+
                     for line in lines:
                         if len(line.strip()) > 0:
                             output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
+
                     output_filename = '{environment}-{filename}.yml'.format(
                         environment=path_components[-1].lower(),
-                        filename=basename.lower()
+                        filename=split_basename[0].lower()
                     )
 
                     print('Writing: {output_filename}'.format(output_filename=output_filename))

@@ -64,7 +64,6 @@ class TemplateEngine:
                     file.close()
 
                     # Skip if no template was defined
-                    print(yaml_content)
                     if 'template' not in yaml_content.keys():
                         continue
 

@@ -336,8 +336,7 @@ class TemplateBuilder:
         Convert value to title case
 
         :type value: str
-        :param value:
-
+        :param value: 
         :return: The value in title case
         """
         return str(value).title()

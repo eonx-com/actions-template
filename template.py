@@ -11,6 +11,7 @@ if __name__ == '__main__':
     TemplateEngine.generate(
         environment=environment,
         template_root=template_root,
-        config_root=config_root
+        config_root=config_root,
+        output_filename=output_filename
     )
 

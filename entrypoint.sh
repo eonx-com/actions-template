@@ -46,6 +46,7 @@ else
   # Building all environments in the config root folder
   for ENVIRONMENT_CURRENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then
+          echo ${ENVIRONMENT_CURRENT}
           ENVIRONMENT_SELECTED=$(basename ${ENVIRONMENT_CURRENT})
           OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_SELECTED}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
 

@@ -30,6 +30,9 @@ class TemplateEngine:
 
         path = '{config_root}/{environment}'.format(config_root=config_root, environment=environment)
 
+        if output_path != '':
+            output_path = '{output_path}/'.format(output_path=output_path)
+
         # Load configuration file for the environment
         config = {}
         for root, directories, files in os.walk(path):
@@ -103,9 +106,6 @@ class TemplateEngine:
                     for line in lines:
                         if len(line.strip()) > 0:
                             output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
-
-                    if output_path != '':
-                        output_path = '{output_path}/'.format(output_path=output_path)
 
                     output_filename = '{output_path}{output_prefix}{filename}{output_suffix}'.format(
                         environment=path_components[-1].lower(),

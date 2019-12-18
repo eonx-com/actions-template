@@ -10,7 +10,7 @@ class TemplateEngine:
     config_path = None
 
     @staticmethod
-    def generate(environment, template_root='templates', config_root='config', output_filename=None):
+    def generate(environment, template_root='templates', config_root='config', output_prefix='', output_suffix='', output_path=''):
         """
         Generate output template
 
@@ -104,11 +104,13 @@ class TemplateEngine:
                         if len(line.strip()) > 0:
                             output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
 
-                    if output_filename is None or output_filename == '':
-                        output_filename = '{environment}-{filename}.yml'.format(
-                            environment=path_components[-1].lower(),
-                            filename=split_basename[0].lower()
-                        )
+                    output_filename = '{output_path}{output_prefix}{filename}{output_suffix}'.format(
+                        environment=path_components[-1].lower(),
+                        filename=split_basename[0].lower(),
+                        output_path=output_path,
+                        output_prefix=output_prefix,
+                        output_suffix=output_suffix
+                    )
 
                     print('Writing: {output_filename}'.format(output_filename=output_filename))
                     output_file = open(output_filename, 'wt')

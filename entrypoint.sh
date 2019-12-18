@@ -26,38 +26,28 @@ fi
 pip install -r /opt/template/requirements.txt
 
 if [[ "${ENVIRONMENT_SELECTED}" != "*" ]] && [[ ! -z "${ENVIRONMENT_SELECTED}" ]]; then
-  echo "Building '${ENVIRONMENT_SELECTED}' Environment..."
-
-  # Building a single environment from the config root folder
-  OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_SELECTED}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
-
-  echo "Building: '${OUTPUT_FILENAME}'"
-
-  # Build the template
+  echo "Building ${ENVIRONMENT_SELECTED} Environment..."
   python /opt/template/template.py \
-    "${ENVIRONMENT}" \
+    "${ENVIRONMENT_SELECTED}" \
     "${TEMPLATE_ROOT}" \
     "${CONFIG_ROOT}" \
-    "${OUTPUT_FILENAME}"
+    "${OUTPUT_PATH}" \
+    "${OUTPUT_FILENAME_PREFIX}" \
+    "${OUTPUT_FILENAME_SUFFIX}"
 
 else
   echo "Building All Environments..."
-
-  # Building all environments in the config root folder
   for ENVIRONMENT_CURRENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then
           echo ${ENVIRONMENT_CURRENT}
           ENVIRONMENT_SELECTED=$(basename ${ENVIRONMENT_CURRENT})
-          OUTPUT_FILENAME=$(echo "${OUTPUT_PATH}/${OUTPUT_FILENAME_PREFIX}${ENVIRONMENT_SELECTED}${OUTPUT_FILENAME_SUFFIX}" | tr -s /)
-
-          echo "Building: '${OUTPUT_FILENAME}'"
-
-          # Build the template
           python /opt/template/template.py \
             "${ENVIRONMENT_SELECTED}" \
             "${TEMPLATE_ROOT}" \
             "${CONFIG_ROOT}" \
-            "${OUTPUT_FILENAME}"
+            "${OUTPUT_PATH}" \
+            "${OUTPUT_FILENAME_PREFIX}" \
+            "${OUTPUT_FILENAME_SUFFIX}"
       fi
   done
 

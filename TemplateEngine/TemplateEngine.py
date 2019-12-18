@@ -104,7 +104,7 @@ class TemplateEngine:
                         if len(line.strip()) > 0:
                             output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
 
-                    if output_filename is None:
+                    if output_filename is None or output_filename == '':
                         output_filename = '{environment}-{filename}.yml'.format(
                             environment=path_components[-1].lower(),
                             filename=split_basename[0].lower()

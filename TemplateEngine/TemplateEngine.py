@@ -104,6 +104,9 @@ class TemplateEngine:
                         if len(line.strip()) > 0:
                             output_content += '{line}\n'.format(line=line.rstrip().replace('\t', '    '))
 
+                    if output_path != '':
+                        output_path = '{output_path}/'.format(output_path=output_path)
+
                     output_filename = '{output_path}{output_prefix}{filename}{output_suffix}'.format(
                         environment=path_components[-1].lower(),
                         filename=split_basename[0].lower(),

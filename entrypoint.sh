@@ -18,7 +18,7 @@ if [[ ! -d "${CONFIG_ROOT}" ]]; then
     exit 2;
 fi
 if [[ ! -d "${OUTPUT_PATH}" ]]; then
-    echo "ERROR: The config path specified (${CONFIG_ROOT}) could not be found"
+    echo "ERROR: The output path specified (${OUTPUT_PATH}) could not be found"
     exit 3;
 fi
 

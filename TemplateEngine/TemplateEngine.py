@@ -101,6 +101,9 @@ class TemplateEngine:
                         }
                     }
 
+                    print('Rendering: {filename}'.format(filename=template['filename']))
+                    print('Data: {data}'.format(data=data))
+
                     TemplateBuilder.last_data = data
                     template_rendered = TemplateBuilder.template_render(
                         content=template_content,

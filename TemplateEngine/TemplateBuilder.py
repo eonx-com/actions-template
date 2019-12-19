@@ -207,7 +207,7 @@ class TemplateBuilder:
         file_object.close()
 
         last_data['data'] = data
-        
+
         print('Rendering Child: {filename}'.format(filename=base_filename))
         print('Data: {data}'.format(data=data))
 

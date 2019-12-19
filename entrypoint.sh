@@ -2,9 +2,9 @@
 
 # Get parameters from Github Actions workflow
 ENVIRONMENT_SELECTED=${1}
-TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${2}" | tr -s /)
-CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${3}" | tr -s /)
-OUTPUT_PATH=$(echo "${GITHUB_WORKSPACE}/${4}" | tr -s /)
+TEMPLATE_ROOT=$(echo "${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/${2}" | tr -s /)
+CONFIG_ROOT=$(echo "${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/${3}" | tr -s /)
+OUTPUT_PATH=$(echo "${GITHUB_WORKSPACE}/${GITHUB_REPOSITORY}/${4}" | tr -s /)
 OUTPUT_FILENAME_PREFIX=${5}
 OUTPUT_FILENAME_SUFFIX=${6}
 

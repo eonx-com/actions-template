@@ -54,5 +54,3 @@ else
   done
 
 fi
-
-chmod -R 777 ${OUTPUT_PATH}/*;

@@ -30,7 +30,7 @@ class TemplateEngine:
 
         path = '{config_root}/{environment}'.format(config_root=config_root, environment=environment)
 
-        if output_path != '':
+        if output_path != '' and output_path.endswith('/') is False:
             output_path = '{output_path}/'.format(output_path=output_path)
 
         # Load configuration file for the environment

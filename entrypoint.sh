@@ -25,7 +25,8 @@ fi
 pip install -r /opt/template/requirements.txt
 
 if [[ "${ENVIRONMENT_SELECTED}" != "*" ]] && [[ ! -z "${ENVIRONMENT_SELECTED}" ]]; then
-  echo "Building ${ENVIRONMENT_SELECTED} Environment..."
+  echo "Building ${ENVIRONMENT_SELECTED}..."
+  echo "Output Path: ${OUTPUT_PATH}"
   python /opt/template/template.py \
     "${ENVIRONMENT_SELECTED}" \
     "${TEMPLATE_ROOT}" \
@@ -36,6 +37,7 @@ if [[ "${ENVIRONMENT_SELECTED}" != "*" ]] && [[ ! -z "${ENVIRONMENT_SELECTED}" ]
 
 else
   echo "Building All Environments..."
+  echo "Output Path: ${OUTPUT_PATH}"
   for ENVIRONMENT_CURRENT in ${CONFIG_ROOT}/* ; do
       if [[ -d "${ENVIRONMENT_CURRENT}" ]]; then
           echo ${ENVIRONMENT_CURRENT}

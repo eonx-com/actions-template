@@ -37,6 +37,7 @@ class TemplateEngine:
 
         # Load configuration file for the environment
         config = {}
+
         for root, directories, files in os.walk(path):
             for file in files:
                 if file.lower() == 'config.yaml' or file.lower() == 'config.yml':
@@ -47,7 +48,7 @@ class TemplateEngine:
                     for block_id, block in yaml_content.items():
                         if block_id == 'config':
                             print('Loading: {filename}'.format(filename=filename))
-                            config = config.update(block)
+                            config.update(block)
 
         print('Finished loading configuration')
         print(config)

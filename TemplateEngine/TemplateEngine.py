@@ -33,19 +33,24 @@ class TemplateEngine:
         if output_path != '' and output_path.endswith('/') is False:
             output_path = '{output_path}/'.format(output_path=output_path)
 
+        print('Loading configuration files...')
+
         # Load configuration file for the environment
         config = {}
         for root, directories, files in os.walk(path):
             for file in files:
                 if file.lower() == 'config.yaml' or file.lower() == 'config.yml':
                     filename = os.path.join(root, file)
-                    print('Loading environment configuration: {filename}'.format(filename=filename))
                     file = open(filename, 'rt')
                     yaml_content = yaml.full_load(file)
                     file.close()
                     for block_id, block in yaml_content.items():
                         if block_id == 'config':
+                            print('Loading: {filename}'.format(filename=filename))
                             config = config.update(block)
+
+        print('Finished loading configuration')
+        print(config)
 
         # Render templates
         for root, directories, files in os.walk(path):
@@ -53,7 +58,7 @@ class TemplateEngine:
                 if file.lower().endswith('.yaml') or file.lower().endswith('.yml'):
                     # Mangle the filename several different ways
                     filename = os.path.join(root, file)
-                    print('Loading configuration file: {filename}'.format(filename=filename))
+                    print('Loading environment: {filename}'.format(filename=filename))
                     basename = os.path.basename(filename)
                     path = filename[:-len(basename)].strip('/')
                     path_components = filename[:-len(basename)].strip('/').split('/')

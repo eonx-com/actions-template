@@ -18,8 +18,7 @@ if [[ ! -d "${CONFIG_ROOT}" ]]; then
     exit 2;
 fi
 if [[ ! -d "${OUTPUT_PATH}" ]]; then
-    echo "ERROR: The output path specified (${OUTPUT_PATH}) could not be found"
-    exit 3;
+    mkdir -p ${OUTPUT_PATH};
 fi
 
 # Install Python requirements

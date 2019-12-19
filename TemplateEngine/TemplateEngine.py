@@ -88,7 +88,7 @@ class TemplateEngine:
                         template_data = template['data']
 
                     data = {
-                        'environment': environment,
+                        'environment': template['environment'] or environment,
                         'config': config,
                         'data': template_data,
                         'template': {

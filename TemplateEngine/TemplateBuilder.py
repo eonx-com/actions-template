@@ -206,7 +206,7 @@ class TemplateBuilder:
         content = file_object.read()
         file_object.close()
 
-        last_data['data'].update(data)
+        last_data['data'] = data
         rendered_content = TemplateBuilder.template_render(content=content, data=last_data)
 
         if indent > 0:

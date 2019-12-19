@@ -39,6 +39,7 @@ class TemplateEngine:
             for file in files:
                 if file.lower() == 'config.yaml' or file.lower() == 'config.yml':
                     filename = os.path.join(root, file)
+                    print('Loading environment configuration: {filename}'.format(filename=filename))
                     file = open(filename, 'rt')
                     yaml_content = yaml.full_load(file)
                     file.close()
@@ -52,6 +53,7 @@ class TemplateEngine:
                 if file.lower().endswith('.yaml') or file.lower().endswith('.yml'):
                     # Mangle the filename several different ways
                     filename = os.path.join(root, file)
+                    print('Loading configuration file: {filename}'.format(filename=filename))
                     basename = os.path.basename(filename)
                     path = filename[:-len(basename)].strip('/')
                     path_components = filename[:-len(basename)].strip('/').split('/')

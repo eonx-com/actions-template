@@ -43,6 +43,7 @@ class TemplateBuilder:
         template.globals['base64_decode'] = TemplateBuilder.base64_decode
         template.globals['load_template'] = TemplateBuilder.load_template
         template.globals['raise_error'] = TemplateBuilder.raise_error
+        template.globals['debug_message'] = TemplateBuilder.debug_message
 
         TemplateBuilder.last_data = data
         return template.render(data)
@@ -57,6 +58,16 @@ class TemplateBuilder:
         """
         print('Template Error: {error}'.format(error=error))
         exit(1)
+
+    @staticmethod
+    def debug_message(message):
+        """
+        Raise a debug message
+
+        :type message: str
+        :param message: Message to display
+        """
+        print('Debug Message: {message}'.format(message=message))
 
     @staticmethod
     def to_aws_resource_id(name, invert=False):

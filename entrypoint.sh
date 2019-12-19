@@ -21,7 +21,6 @@ if [[ ! -d "${OUTPUT_PATH}" ]]; then
     echo "WARNING: Output path did not exist, creating..."
     echo "Creating path: ${OUTPUT_PATH}"
     mkdir -p ${OUTPUT_PATH};
-    chmod 777 ${OUTPUT_PATH};
 fi
 
 # Install Python requirements
@@ -56,3 +55,5 @@ else
   done
 
 fi
+
+chmod -R 777 ${OUTPUT_PATH}/*;

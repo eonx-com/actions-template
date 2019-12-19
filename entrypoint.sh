@@ -18,6 +18,8 @@ if [[ ! -d "${CONFIG_ROOT}" ]]; then
     exit 2;
 fi
 if [[ ! -d "${OUTPUT_PATH}" ]]; then
+    echo "Output folder did not exist"
+    echo "Creating path: ${OUTPUT_PATH}"
     mkdir -p ${OUTPUT_PATH};
 fi
 

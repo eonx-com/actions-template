@@ -354,10 +354,10 @@ class TemplateBuilder:
         file = open(filename, 'rt')
         content = str(file.read())
         file.close()
+        rendered_content = ''
 
         if indent > 0:
             lines = content.split('\n')
-            rendered_content = ''
             first = True
             for line in lines:
                 for i in range(0, indent * indent_width):

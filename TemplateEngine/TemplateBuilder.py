@@ -365,7 +365,7 @@ class TemplateBuilder:
                         line = indent_character + line
                     first = False
                 rendered_content += line + '\n'
-        print(rendered_content)
+
         return rendered_content
 
     @staticmethod

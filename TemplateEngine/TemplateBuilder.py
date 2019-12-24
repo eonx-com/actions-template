@@ -332,18 +332,41 @@ class TemplateBuilder:
         return value.strip()
 
     @staticmethod
-    def read_file(filename):
+    def read_file(filename, indent=0, indent_width=1, indent_first=False, indent_character=' '):
         """
         :type filename: str
         :param filename:
+
+        :type indent: int
+        :param indent:
+
+        :type indent_width:
+        :param indent_width:
+
+        :type indent_first: bool
+        :param indent_first:
+
+        :type indent_character: str
+        :param indent_character:
 
         :return: The files contents
         """
         file = open(filename, 'rt')
         content = str(file.read())
         file.close()
+        rendered_content = ''
 
-        return content
+        if indent > 0:
+            lines = content.split('\n')
+            first = True
+            for line in lines:
+                for i in range(0, indent * indent_width):
+                    if indent_first is True or first is False:
+                        line = indent_character + line
+                    first = False
+                rendered_content += line + '\n'
+
+        return rendered_content
 
     @staticmethod
     def to_title(value):

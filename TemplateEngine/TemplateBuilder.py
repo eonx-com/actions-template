@@ -352,9 +352,8 @@ class TemplateBuilder:
         :return: The files contents
         """
         file = open(filename, 'rt')
-        content = str(file.read())
+        rendered_content = str(file.read())
         file.close()
-        rendered_content = ''
 
         if indent > 0:
             lines = content.split('\n')

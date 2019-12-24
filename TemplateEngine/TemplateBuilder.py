@@ -352,12 +352,11 @@ class TemplateBuilder:
         :return: The files contents
         """
         file = open(filename, 'rt')
-        content = str(file.read())
+        rendered_content = str(file.read())
         file.close()
-        rendered_content = ''
 
         if indent > 0:
-            lines = content.split('\n')
+            lines = rendered_content.split('\n')
             first = True
             for line in lines:
                 for i in range(0, indent * indent_width):

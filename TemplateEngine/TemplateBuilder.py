@@ -357,6 +357,7 @@ class TemplateBuilder:
 
         if indent > 0:
             lines = rendered_content.split('\n')
+            rendered_content = ''
             first = True
             for line in lines:
                 for i in range(0, indent * indent_width):

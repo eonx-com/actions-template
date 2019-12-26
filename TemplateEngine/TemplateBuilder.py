@@ -363,7 +363,7 @@ class TemplateBuilder:
                 for i in range(0, indent * indent_width):
                     if indent_first is True or first is False:
                         line = indent_character + line
-                    first = False
+                first = False
                 rendered_content += line + '\n'
 
         return rendered_content
